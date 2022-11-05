@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Recipe Detail{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+    <h1>{{ recipe.name }}</h1>
+    <h3>Ingredients</h3>
+    <p>{{ recipe.ingredients }} x<span>{{recipe.portions}}</span>
+    <h3>Instructions</h3>
+    <p>{{ recipe.instructions }}</p>
+    <h3>Image</h3>
+    <img src="/media" alt="Optional image">
+    <h3>Portions</h3>
+    <p>{{ recipe.portions }}</p>
+    <h3>Nutritionist</h3>
+    <p>{{ recipe.nutritionist }}</p>
+    <h3>Client</h3>
+    <p>{{ recipe.client }}</p>
+{% else %}
+  <p>You are not logged in!</p>
+  <a href="{% url 'login' %}">Login</a>
+{% endif %}
+{% endblock %}

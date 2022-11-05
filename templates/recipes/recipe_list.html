@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Recipes List{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+  <h1>Recipes</h1>
+  <ul>
+    {% for recipe in recipe_list %}
+      {% if request.user == recipe.user %}
+        <li><a href="{{ recipe.get_absolute_url }}">{{ recipe.name }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>You are not logged in!</p>
+  <a href="{% url 'login' %}">Login</a>
+{% endif %}
+{% endblock %}
