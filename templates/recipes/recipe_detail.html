@@ -8,7 +8,9 @@
   <p><a href="{% url 'logout' %}">Log Out</a></p>
     <h1>{{ recipe.name }}</h1>
     <h3>Ingredients</h3>
-    <p>{{ recipe.ingredients }} x<span>{{recipe.portions}}</span>
+    {% for ingredient in recipe.ingredients.all %}
+      <p>{{ ingredient.name }} x<span>{{ recipe.portions }}</span></p>
+    {% endfor %}
     <h3>Instructions</h3>
     <p>{{ recipe.instructions }}</p>
     <h3>Image</h3>

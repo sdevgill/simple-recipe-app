@@ -1,9 +1,9 @@
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import (
-    LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+    LoginRequiredMixin, UserPassesTestMixin
 )
 
-from .models import Recipe, Nutritionist, Client, Ingredient
+from .models import Recipe
 
 
 class RecipeListView(LoginRequiredMixin, ListView):
@@ -11,8 +11,9 @@ class RecipeListView(LoginRequiredMixin, ListView):
     template_name = "recipes/recipe_list.html"
 
 
-class RecipeDetailView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
+class RecipeDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Recipe
     template_name = "recipes/recipe_detail.html"
+
     def test_func(self):
         return self.get_object().user_can_view(self.request.user)

@@ -22,8 +22,7 @@ class Client(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)
-    # amount = models.IntegerField()
-    # recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    # amount = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -34,7 +33,8 @@ class Recipe(models.Model):
     name = models.CharField(max_length=100)
     instructions = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
-    ingredients = models.ManyToManyField(Ingredient)
+    ingredients = models.ManyToManyField(Ingredient, related_name='ingredients')
+    # ingredients = models.ForeignKey(Ingredient, on_delete=models.CASCADE, blank=True, null=True)
     portions = models.IntegerField(default=1)
     nutritionist = models.ForeignKey(Nutritionist, on_delete=models.CASCADE)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, blank=True)
@@ -47,5 +47,3 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipe_detail', kwargs={'pk': self.pk})
-
-
